@@ -3,7 +3,13 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
+    id("com.gradle.build-scan") version("1.16")
     kotlin("multiplatform") version("1.3.10")
+}
+
+buildScan {
+    setTermsOfServiceUrl("https://gradle.com/terms-of-service")
+    setTermsOfServiceAgree("yes")
 }
 
 repositories {
@@ -20,6 +26,9 @@ kotlin {
     }
 
     sourceSets {
+        // the dependencies task knows about these dependencies...
+        // But the build scan says no dependencies were resolved for this build
+        // TODO: File bug on build scan plugin and/or Kotlin multi-platform plugin
         getByName("commonMain") {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")

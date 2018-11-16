@@ -116,6 +116,11 @@
                 "name": "ext"
             },
             {
+                "type": "com.gradle.scan.plugin.internal.api.h",
+                "target": "org.gradle.api.Project",
+                "name": "buildScan"
+            },
+            {
                 "type": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
                 "target": "org.gradle.api.Project",
                 "name": "kotlin"
