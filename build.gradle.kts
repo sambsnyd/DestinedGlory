@@ -16,13 +16,16 @@ repositories {
     jcenter()
 }
 
+val backendJvm = "backendJvm"
+val frontendJs = "frontendJs"
+
 kotlin {
     targets {
         // The fromPreset() method mentioned in JetBrains examples is exposed on a private inner class which is
         // added dynamically via an internal object not meant to be part of Gradle's public API
         // This doesn't hold with Kotlin or Gradle best practices and it's harder than any normal, supported way
-        add(presets.getByName("jvm").createTarget("jvm"))
-        add(presets.getByName("js").createTarget("js"))
+        add(presets.getByName("jvm").createTarget(backendJvm))
+        add(presets.getByName("js").createTarget(frontendJs))
     }
 
     sourceSets {
@@ -31,25 +34,50 @@ kotlin {
         // TODO: File bug on build scan plugin and/or Kotlin multi-platform plugin
         getByName("commonMain") {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+                //implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
             }
         }
-        getByName("jvmMain") {
+        getByName("${backendJvm}Main") {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
                 implementation("io.ktor:ktor-server-netty:1.0.0-rc")
                 implementation("org.slf4j:slf4j-simple:1.7.25")
             }
         }
-        getByName("jsMain") {
-
+        getByName("${frontendJs}Main") {
+            dependencies {
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
+            }
         }
     }
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        jvmTarget = "1.8"
-        allWarningsAsErrors = true
+tasks {
+    withType<KotlinCompile>().configureEach {
+        kotlinOptions {
+            jvmTarget = "1.8"
+            allWarningsAsErrors = true
+
+        }
     }
+
+    // Bundle the outputs of the frontend build into the resources of the backend build
+    // So the server has the javascript available to serve
+    named("${backendJvm}ProcessResources").configure {
+        this as ProcessResources
+        from(named("compileKotlin${frontendJs.capitalize()}")) {
+            into("staticassets")
+        }
+    }
+
+    val backendJarTask = named("${backendJvm}Jar") as TaskProvider<Jar>
+
+    // The application plugin isn't interoperable by default with the kotlin multiplatform plugin
+    // So just manually create a JavaExec task that's appropriately wired up
+    val run by registering(JavaExec::class) {
+        dependsOn(backendJarTask)
+        classpath =  files(configurations.backendJvmRuntimeClasspath, backendJarTask.get().archivePath)
+        main = "com.github.sambsnyd.destinedglory.DestinedGloryServerKt"
+    }
+
 }
