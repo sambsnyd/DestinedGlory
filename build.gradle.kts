@@ -37,6 +37,8 @@ kotlin {
         getByName("jvmMain") {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+                implementation("io.ktor:ktor-server-netty:1.0.0-rc")
+                implementation("org.slf4j:slf4j-simple:1.7.25")
             }
         }
         getByName("jsMain") {
