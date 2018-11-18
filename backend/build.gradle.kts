@@ -24,7 +24,6 @@ tasks {
         }
     }
 
-
     // Bundle the outputs of the frontend build into the resources of the backend build
     // So the server has the javascript available to serve
     named("processResources").configure {
@@ -33,8 +32,6 @@ tasks {
             into("staticassets")
         }
     }
-
-    val backendJarTask = named("jar") as TaskProvider<Jar>
 }
 
 application {
