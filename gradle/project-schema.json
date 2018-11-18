@@ -1,6 +1,26 @@
 {
     ":": {
         "conventions": [
+            
+        ],
+        "configurations": [
+            
+        ],
+        "extensions": [
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.Project",
+                "name": "ext"
+            },
+            {
+                "type": "com.gradle.scan.plugin.internal.api.h",
+                "target": "org.gradle.api.Project",
+                "name": "buildScan"
+            }
+        ]
+    },
+    ":backend": {
+        "conventions": [
             {
                 "type": "org.gradle.api.plugins.BasePluginConvention",
                 "target": "org.gradle.api.Project",
@@ -19,118 +39,42 @@
         ],
         "configurations": [
             "annotationProcessor",
+            "api",
+            "apiDependenciesMetadata",
             "apiElements",
             "archives",
-            "backendJvmApi",
-            "backendJvmApiElements",
-            "backendJvmCompile",
-            "backendJvmCompileClasspath",
-            "backendJvmCompileOnly",
-            "backendJvmDefault",
-            "backendJvmImplementation",
-            "backendJvmMainApi",
-            "backendJvmMainApiDependenciesMetadata",
-            "backendJvmMainCompileOnly",
-            "backendJvmMainCompileOnlyDependenciesMetadata",
-            "backendJvmMainImplementation",
-            "backendJvmMainImplementationDependenciesMetadata",
-            "backendJvmMainRuntimeOnly",
-            "backendJvmMainRuntimeOnlyDependenciesMetadata",
-            "backendJvmRuntime",
-            "backendJvmRuntimeClasspath",
-            "backendJvmRuntimeElements",
-            "backendJvmRuntimeOnly",
-            "backendJvmTestApi",
-            "backendJvmTestApiDependenciesMetadata",
-            "backendJvmTestCompile",
-            "backendJvmTestCompileClasspath",
-            "backendJvmTestCompileOnly",
-            "backendJvmTestCompileOnlyDependenciesMetadata",
-            "backendJvmTestImplementation",
-            "backendJvmTestImplementationDependenciesMetadata",
-            "backendJvmTestRuntime",
-            "backendJvmTestRuntimeClasspath",
-            "backendJvmTestRuntimeOnly",
-            "backendJvmTestRuntimeOnlyDependenciesMetadata",
-            "commonMainApi",
-            "commonMainApiDependenciesMetadata",
-            "commonMainCompileOnly",
-            "commonMainCompileOnlyDependenciesMetadata",
-            "commonMainImplementation",
-            "commonMainImplementationDependenciesMetadata",
-            "commonMainRuntimeOnly",
-            "commonMainRuntimeOnlyDependenciesMetadata",
-            "commonTestApi",
-            "commonTestApiDependenciesMetadata",
-            "commonTestCompileOnly",
-            "commonTestCompileOnlyDependenciesMetadata",
-            "commonTestImplementation",
-            "commonTestImplementationDependenciesMetadata",
-            "commonTestRuntimeOnly",
-            "commonTestRuntimeOnlyDependenciesMetadata",
             "compile",
             "compileClasspath",
             "compileOnly",
+            "compileOnlyDependenciesMetadata",
             "default",
-            "frontendJsApi",
-            "frontendJsApiElements",
-            "frontendJsCompile",
-            "frontendJsCompileClasspath",
-            "frontendJsCompileOnly",
-            "frontendJsDefault",
-            "frontendJsImplementation",
-            "frontendJsMainApi",
-            "frontendJsMainApiDependenciesMetadata",
-            "frontendJsMainCompileOnly",
-            "frontendJsMainCompileOnlyDependenciesMetadata",
-            "frontendJsMainImplementation",
-            "frontendJsMainImplementationDependenciesMetadata",
-            "frontendJsMainRuntimeOnly",
-            "frontendJsMainRuntimeOnlyDependenciesMetadata",
-            "frontendJsRuntime",
-            "frontendJsRuntimeClasspath",
-            "frontendJsRuntimeElements",
-            "frontendJsRuntimeOnly",
-            "frontendJsTestApi",
-            "frontendJsTestApiDependenciesMetadata",
-            "frontendJsTestCompile",
-            "frontendJsTestCompileClasspath",
-            "frontendJsTestCompileOnly",
-            "frontendJsTestCompileOnlyDependenciesMetadata",
-            "frontendJsTestImplementation",
-            "frontendJsTestImplementationDependenciesMetadata",
-            "frontendJsTestRuntime",
-            "frontendJsTestRuntimeClasspath",
-            "frontendJsTestRuntimeOnly",
-            "frontendJsTestRuntimeOnlyDependenciesMetadata",
             "implementation",
+            "implementationDependenciesMetadata",
             "kapt",
             "kaptTest",
             "kotlinCompilerClasspath",
             "kotlinCompilerPluginClasspath",
             "kotlinNativeCompilerPluginClasspath",
             "kotlinScriptDef",
-            "metadataApi",
-            "metadataApiElements",
-            "metadataCompile",
-            "metadataCompileClasspath",
-            "metadataCompileOnly",
-            "metadataDefault",
-            "metadataImplementation",
-            "metadataRuntimeOnly",
             "runtime",
             "runtimeClasspath",
             "runtimeElements",
             "runtimeOnly",
+            "runtimeOnlyDependenciesMetadata",
             "testAnnotationProcessor",
+            "testApi",
+            "testApiDependenciesMetadata",
             "testCompile",
             "testCompileClasspath",
             "testCompileOnly",
+            "testCompileOnlyDependenciesMetadata",
             "testImplementation",
+            "testImplementationDependenciesMetadata",
             "testKotlinScriptDef",
             "testRuntime",
             "testRuntimeClasspath",
-            "testRuntimeOnly"
+            "testRuntimeOnly",
+            "testRuntimeOnlyDependenciesMetadata"
         ],
         "extensions": [
             {
@@ -139,23 +83,18 @@
                 "name": "ext"
             },
             {
-                "type": "com.gradle.scan.plugin.internal.api.h",
-                "target": "org.gradle.api.Project",
-                "name": "buildScan"
-            },
-            {
-                "type": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
+                "type": "org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension",
                 "target": "org.gradle.api.Project",
                 "name": "kotlin"
             },
             {
                 "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
-                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
+                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension",
                 "name": "ext"
             },
             {
                 "type": "org.jetbrains.kotlin.gradle.dsl.ExperimentalExtension",
-                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
+                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension",
                 "name": "experimental"
             },
             {
@@ -165,32 +104,12 @@
             },
             {
                 "type": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.sources.DefaultKotlinSourceSet>",
-                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
+                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinJvmProjectExtension",
                 "name": "sourceSets"
             },
             {
                 "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
                 "target": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.sources.DefaultKotlinSourceSet>",
-                "name": "ext"
-            },
-            {
-                "type": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.KotlinTarget>",
-                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
-                "name": "targets"
-            },
-            {
-                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
-                "target": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.KotlinTarget>",
-                "name": "ext"
-            },
-            {
-                "type": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.KotlinTargetPreset>",
-                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension",
-                "name": "presets"
-            },
-            {
-                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
-                "target": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.KotlinTargetPreset>",
                 "name": "ext"
             },
             {
@@ -251,6 +170,202 @@
             {
                 "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
                 "target": "org.gradle.api.plugins.JavaApplication",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.scripting.ScriptingExtension",
+                "target": "org.gradle.api.Project",
+                "name": "kotlinScripting"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.scripting.ScriptingExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.tasks.SourceSet",
+                "name": "ext"
+            }
+        ]
+    },
+    ":common": {
+        "conventions": [
+            
+        ],
+        "configurations": [
+            
+        ],
+        "extensions": [
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.Project",
+                "name": "ext"
+            }
+        ]
+    },
+    ":frontend": {
+        "conventions": [
+            {
+                "type": "org.gradle.api.plugins.BasePluginConvention",
+                "target": "org.gradle.api.Project",
+                "name": "base"
+            },
+            {
+                "type": "org.gradle.api.plugins.JavaPluginConvention",
+                "target": "org.gradle.api.Project",
+                "name": "java"
+            }
+        ],
+        "configurations": [
+            "annotationProcessor",
+            "api",
+            "apiDependenciesMetadata",
+            "apiElements",
+            "archives",
+            "compile",
+            "compileClasspath",
+            "compileOnly",
+            "compileOnlyDependenciesMetadata",
+            "default",
+            "implementation",
+            "implementationDependenciesMetadata",
+            "kotlinCompilerClasspath",
+            "kotlinCompilerPluginClasspath",
+            "kotlinNativeCompilerPluginClasspath",
+            "runtime",
+            "runtimeClasspath",
+            "runtimeElements",
+            "runtimeOnly",
+            "runtimeOnlyDependenciesMetadata",
+            "testAnnotationProcessor",
+            "testApi",
+            "testApiDependenciesMetadata",
+            "testCompile",
+            "testCompileClasspath",
+            "testCompileOnly",
+            "testCompileOnlyDependenciesMetadata",
+            "testImplementation",
+            "testImplementationDependenciesMetadata",
+            "testRuntime",
+            "testRuntimeClasspath",
+            "testRuntimeOnly",
+            "testRuntimeOnlyDependenciesMetadata"
+        ],
+        "extensions": [
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.Project",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.dsl.KotlinSingleJavaTargetExtension",
+                "target": "org.gradle.api.Project",
+                "name": "kotlin"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinSingleJavaTargetExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.dsl.ExperimentalExtension",
+                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinSingleJavaTargetExtension",
+                "name": "experimental"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.dsl.ExperimentalExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.sources.DefaultKotlinSourceSet>",
+                "target": "org.jetbrains.kotlin.gradle.dsl.KotlinSingleJavaTargetExtension",
+                "name": "sourceSets"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.NamedDomainObjectContainer<org.jetbrains.kotlin.gradle.plugin.sources.DefaultKotlinSourceSet>",
+                "name": "ext"
+            },
+            {
+                "type": "org.gradle.api.internal.plugins.DefaultArtifactPublicationSet",
+                "target": "org.gradle.api.Project",
+                "name": "defaultArtifacts"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.internal.plugins.DefaultArtifactPublicationSet",
+                "name": "ext"
+            },
+            {
+                "type": "org.gradle.api.reporting.ReportingExtension",
+                "target": "org.gradle.api.Project",
+                "name": "reporting"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.reporting.ReportingExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.gradle.api.tasks.SourceSetContainer",
+                "target": "org.gradle.api.Project",
+                "name": "sourceSets"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.tasks.SourceSetContainer",
+                "name": "ext"
+            },
+            {
+                "type": "org.gradle.api.plugins.JavaPluginExtension",
+                "target": "org.gradle.api.Project",
+                "name": "java"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.gradle.api.plugins.JavaPluginExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.frontend.KotlinFrontendExtension",
+                "target": "org.gradle.api.Project",
+                "name": "kotlinFrontend"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.frontend.KotlinFrontendExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.frontend.npm.NpmExtension",
+                "target": "org.gradle.api.Project",
+                "name": "npm"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.frontend.npm.NpmExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.frontend.ktor.KtorExtension",
+                "target": "org.gradle.api.Project",
+                "name": "ktor"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.frontend.ktor.KtorExtension",
+                "name": "ext"
+            },
+            {
+                "type": "org.jetbrains.kotlin.gradle.frontend.karma.KarmaExtension",
+                "target": "org.gradle.api.Project",
+                "name": "karma"
+            },
+            {
+                "type": "org.gradle.api.plugins.ExtraPropertiesExtension",
+                "target": "org.jetbrains.kotlin.gradle.frontend.karma.KarmaExtension",
                 "name": "ext"
             },
             {
