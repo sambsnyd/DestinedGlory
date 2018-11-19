@@ -1,9 +1,5 @@
 package com.github.sambsnyd.destinedglory
 
-import io.ktor.client.HttpClient
-
-import io.ktor.client.engine.apache.Apache
-import io.ktor.client.features.json.JsonFeature
 import kotlinx.coroutines.runBlocking
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.given

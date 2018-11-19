@@ -15,16 +15,17 @@ import io.ktor.routing.get
 import io.ktor.routing.routing
 import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
+import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-val log = LoggerFactory.getLogger("main")
+val log: Logger = LoggerFactory.getLogger("main")
 
 fun main(){
     val server = embeddedServer(
             factory = Netty,
-            port = 8008,
+            port = 8008, // TODO: Dynamically select an available port
             host = "localhost",
-            watchPaths = listOf("build/libs"), // Reload running server if a new jar is built
+            watchPaths = listOf("build/libs"), // Best-effort reload running server if a new jar is built
             module = Application::destinedGloryModule)
     server.start(wait = true)
 }

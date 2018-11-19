@@ -4,5 +4,5 @@ import kotlin.browser.document
 
 fun main(vararg args: String) {
     val body = document.body!!
-    body.textContent = "Hello world from javascript"
+    body.style.background = "#000000"
 }
