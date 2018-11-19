@@ -22,6 +22,7 @@ plugins.apply(org.jetbrains.kotlin.gradle.frontend.FrontendPlugin::class.java)
 dependencies {
     compile("org.jetbrains.kotlin:kotlin-stdlib-js")
     compile("org.jetbrains.kotlinx:kotlinx-html-js:0.6.11")
+    compile("io.ktor:ktor-client-core-js:1.0.0-rc")
 
     testCompile("org.jetbrains.kotlin:kotlin-test-js")
 }
@@ -51,14 +52,13 @@ tasks {
             sourceMap = true
             moduleKind = "umd"
             sourceMapEmbedSources = "always"
+            apiVersion = "1.3"
         }
     }
-
-
 }
 
 // The kotlin-frontend plugin adds webpack-bundle in afterEvaluate... so we have to register a subsequent callback
-// In order to make it depend upon the tasks that produce the things it bundles
+// in order to make it depend upon the tasks that produce the things it bundles
 // I'm baffled as to why the kotlin-frontend plugin doesn't do that already
 // TODO: File bug on kotlin frontend plugin
 afterEvaluate {

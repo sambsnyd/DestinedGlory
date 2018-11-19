@@ -25,7 +25,7 @@ fun main(){
             factory = Netty,
             port = 8008, // TODO: Dynamically select an available port
             host = "localhost",
-            watchPaths = listOf("build/libs"), // Best-effort reload running server if a new jar is built
+            watchPaths = listOf("build"), // Best-effort reload running server if a new jar is built
             module = Application::destinedGloryModule)
     server.start(wait = true)
 }
