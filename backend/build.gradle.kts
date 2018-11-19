@@ -1,6 +1,7 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinMultiplatformPlugin
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.util.Properties
 
 plugins {
     kotlin("jvm")
@@ -11,45 +12,70 @@ plugins {
 evaluationDependsOn(":frontend")
 
 val ktorVersion = "1.0.0-rc"
-val spekVersion = "2.0.0-rc.1"
+val spekVersion = "1.1.5"
+val junitVersion = "5.3.1"
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation("io.ktor:ktor-server-netty:$ktorVersion")
     implementation("io.ktor:ktor-jackson:$ktorVersion")
+    implementation("io.ktor:ktor-gson:$ktorVersion")
+    implementation("io.ktor:ktor-client-core:$ktorVersion")
+    implementation("io.ktor:ktor-client-gson:$ktorVersion")
     implementation("io.ktor:ktor-client-apache:$ktorVersion")
+
     implementation("org.slf4j:slf4j-simple:1.7.25")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spekVersion") {
-        // Avoid pulling in any kotlin dependencies whose versions might not match
-        exclude(group = "org.jetbrians.kotlin")
-    }
-    testRuntimeOnly("org.spekframework.spek2:spek-runner-junit5:$spekVersion") {
-        exclude(group = "org.jetbrains.kotlin")
-        exclude(group = "org.junit.platform")
-    }
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.jetbrains.spek:spek-api:$spekVersion")
 
-    // Used by spek, need to specify it manually since we excluded all of its transitive dependencies
     testRuntimeOnly(kotlin("reflect"))
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testRuntimeOnly("org.jetbrains.spek:spek-junit-platform-engine:$spekVersion")
 }
+
+// Load API keys from .gitignore'd secrets.properties file, if one exists
+val secretProps: Properties by lazy {
+    val secretPropsFile = file("secrets.properties")
+    val secretProps = Properties()
+    if(secretPropsFile.exists()) {
+        secretPropsFile.reader().use {
+            secretProps.load(it)
+        }
+    }
+     secretProps
+}
+val bungieApiKeyPropName = "bungieapikey"
 
 tasks {
     withType<KotlinCompile>().configureEach {
         kotlinOptions {
             jvmTarget = "1.8"
-            allWarningsAsErrors = true
-
         }
     }
 
     withType<Test>().configureEach {
         useJUnitPlatform {
-            includeEngines("spek2")
+            includeEngines("spek")
+        }
+        if(secretProps.containsKey(bungieApiKeyPropName)) {
+            environment[bungieApiKeyPropName] = secretProps[bungieApiKeyPropName]
+        }
+    }
+
+    /**
+     * The run JavaExec task provided by the application plugin should be passed the api key from the secrets.properties
+     * if such a file exists
+     */
+    named("run").configure{
+        this as JavaExec
+        if(secretProps.containsKey(bungieApiKeyPropName)) {
+            environment[bungieApiKeyPropName] = secretProps[bungieApiKeyPropName]
         }
     }
 
     // Bundle the outputs of the frontend build into the resources of the backend build
-    // So the server has the javascript available to serve
+    // So the server can serve the javascript
     named("processResources").configure {
         this as ProcessResources
         from(project(":frontend").tasks.named("webpack-bundle")) {

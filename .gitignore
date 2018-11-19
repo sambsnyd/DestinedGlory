@@ -2,3 +2,5 @@ build
 out/
 .gradle
 .idea/
+# For storing API keys that shouldn't be shared everywhere
+secrets.properties

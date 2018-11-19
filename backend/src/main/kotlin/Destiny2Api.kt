@@ -3,6 +3,7 @@ package com.github.sambsnyd.destinedglory
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.request.header
+import org.slf4j.LoggerFactory
 
 /**
  * A deeply incomplete wrapper for Bungie's Destiny 2 APIs, documented here:
@@ -13,8 +14,12 @@ class Destiny2Api(
         private val httpClient: HttpClient,
         private val apiKey: String) {
 
-    val apiRoot = "https://www.bungie.net/Platform/"
-    val apiKeyHeaderName = "X-API-Key"
+    companion object {
+        const val apiRoot = "https://www.bungie.net/Platform/"
+        const val apiKeyName = "bungieapikey"
+        const val apiKeyHeaderName = "X-API-Key"
+        private val log = LoggerFactory.getLogger(Destiny2Api::class.java)
+    }
 
     enum class BungieMembershipType(val value: Int) {
         None(0),
@@ -27,12 +32,12 @@ class Destiny2Api(
     }
 
     data class BungieApiResponse<T>(
-            val response: T,
+            //val response: T,
             val errorCode: Int,
             val throttleSeconds: Int,
             val errorStatus: String,
-            val message: String,
-            val messageData: Any
+            val Message: String,
+            val MessageData: Any
     )
 
     /**
@@ -54,7 +59,7 @@ class Destiny2Api(
     /**
      * https://bungie-net.github.io/multi/operation_get_Destiny2-SearchDestinyPlayer.html#operation_get_Destiny2-SearchDestinyPlayer
      */
-    suspend fun searchDestinyPlayer(membershipType: BungieMembershipType, playerName: String): BungieApiResponse<List<UserInfoCard>> {
+    suspend fun searchDestinyPlayer(membershipType: BungieMembershipType, playerName: String): BungieApiResponse<Any?> {
         // Blizzard names have a '#' in them which needs escaping
         val escapedName = playerName.replace("#", "%23")
         return httpClient.get("$apiRoot/Destiny2/SearchDestinyPlayer/${membershipType.value}/$escapedName/") {

@@ -1,19 +1,17 @@
 package com.github.sambsnyd.destinedglory
 
-import com.fasterxml.jackson.databind.SerializationFeature
 import io.ktor.application.call
 import io.ktor.application.install
 import io.ktor.client.HttpClient
-import io.ktor.client.engine.apache.Apache
 import io.ktor.client.request.get
 import io.ktor.features.AutoHeadResponse
 import io.ktor.features.ContentNegotiation
+import io.ktor.gson.gson
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.defaultResource
 import io.ktor.http.content.resources
 import io.ktor.http.content.static
-import io.ktor.jackson.jackson
 import io.ktor.response.respond
 import io.ktor.response.respondText
 import io.ktor.routing.get
@@ -26,11 +24,11 @@ fun main(){
     val log = LoggerFactory.getLogger("DestinedGloryServer")
     val constants = object {
         val guardian = "guardian"
-        val apiKeyName = "bungieapikey"
+
     }
-    val bungieApiKey: String? = System.getenv(constants.apiKeyName)
+    val bungieApiKey: String? = System.getenv(Destiny2Api.apiKeyName)
     if(bungieApiKey == null) {
-        log.warn("No API key specified via the \"${constants.apiKeyName}\" environment variable. " +
+        log.warn("No API key specified via the \"${Destiny2Api.apiKeyName}\" environment variable. " +
                 "No new Guardian information will be able to be queried! " +
                 "Get an API key at https://www.bungie.net/en/Application")
     }
@@ -42,10 +40,9 @@ fun main(){
 
         // Enable JSON serialization/deserialization
         install(ContentNegotiation) {
-            jackson {
-                // Currently prioritizing development experience over other considerations
-                // So let's send pretty-printed JSON when applicable
-                enable(SerializationFeature.INDENT_OUTPUT)
+            gson {
+                // Prioritize developer convenience over saving every possible byte going over the wire
+                setPrettyPrinting()
             }
         }
         install(AutoHeadResponse)
