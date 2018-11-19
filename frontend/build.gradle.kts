@@ -53,4 +53,18 @@ tasks {
             sourceMapEmbedSources = "always"
         }
     }
+
+
+}
+
+// The kotlin-frontend plugin adds webpack-bundle in afterEvaluate... so we have to register a subsequent callback
+// In order to make it depend upon the tasks that produce the things it bundles
+// I'm baffled as to why the kotlin-frontend plugin doesn't do that already
+// TODO: File bug on kotlin frontend plugin
+afterEvaluate {
+    tasks {
+        named("webpack-bundle").configure {
+            dependsOn(named("compileKotlin2Js"), named("processResources"))
+        }
+    }
 }
